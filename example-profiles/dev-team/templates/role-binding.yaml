@@ -5,9 +5,9 @@ metadata:
   namespace: "{{.Release.Namespace}}"
 subjects:
 - kind: ServiceAccount
-  name: "tiller-{{.Values.team}}"
+  name: "{{.Values.serviceAccountName}}"
   namespace: "{{.Release.Namespace}}"
 roleRef:
   kind: Role
-  name: dev-team
+  name: {{.Values.team}}
   apiGroup: rbac.authorization.k8s.io

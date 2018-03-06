@@ -22,6 +22,7 @@ Example Usage:
 `
 
 var namespace string
+var serviceAccountName string
 var version = "DEV"
 
 func main() {
@@ -33,6 +34,7 @@ func main() {
 
 	f := cmd.Flags()
 	f.StringVar(&namespace, "namespace", "default", "namespace of Tiller to apply profile")
+	f.StringVar(&serviceAccountName, "serviceaccount", "tiller-securetiller", "service account name for that Tiller is running under")
 
 	if err := cmd.Execute(); err != nil {
 		os.Exit(1)
@@ -47,8 +49,8 @@ func run(cmd *cobra.Command, args []string) error {
 	if len(args) > 1 {
 		return errors.New("TMI")
 	}
+
 	profilePath := args[0]
-	profileName := filepath.Base(profilePath)
 
 	var outb bytes.Buffer
 	var errb bytes.Buffer
@@ -80,7 +82,7 @@ func run(cmd *cobra.Command, args []string) error {
 
 	outb.Reset()
 	errb.Reset()
-	createSvcAccount := exec.Command("kubectl", "create", "serviceaccount", profileName, "--namespace", namespace)
+	createSvcAccount := exec.Command("kubectl", "create", "serviceaccount", serviceAccountName, "--namespace", namespace)
 	createSvcAccount.Stdout = &outb
 	createSvcAccount.Stderr = &errb
 	err = createSvcAccount.Run()
@@ -102,7 +104,7 @@ func run(cmd *cobra.Command, args []string) error {
 	outb.Reset()
 	errb.Reset()
 
-	specPatch := `{"spec":{"template":{"spec":{"serviceAccount":"` + profileName + `","serviceAccountName":"` + profileName + `"}}}}`
+	specPatch := `{"spec":{"template":{"spec":{"serviceAccount":"` + serviceAccountName + `","serviceAccountName":"` + serviceAccountName + `"}}}}`
 
 	outb.Reset()
 	errb.Reset()
@@ -116,7 +118,7 @@ func run(cmd *cobra.Command, args []string) error {
 		return errors.New(errb.String())
 	}
 
-	fmt.Println("Congrats! Your Tiller in the " + namespace + " namespace is secured with the " + profileName + " service account\nYou can verify your Tiller config by running this command\n\t$ kubectl -n " + namespace + " get deployment tiller-deploy -o json\n")
+	fmt.Println("Congrats! Your Tiller in the " + namespace + " namespace is secured with the " + serviceAccountName + " service account\nYou can verify your Tiller config by running this command\n\t$ kubectl -n " + namespace + " get deployment tiller-deploy -o json\n")
 
 	//TODO: verify that the service account you wanted is now part of the tiller deployment spec
 
