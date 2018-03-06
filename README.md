@@ -47,7 +47,7 @@ $ helm init --tiller-namespace dev-team
 
 Then, use the secure-tiller plugin to apply the example dev-team RBAC profile in this repo.
 ```console
-$ helm secure-tiller --namespace dev-team example-profiles/dev-team/
+$ helm secure-tiller ----serviceaccount sectillersvcacct --namespace dev-team example-profiles/dev-team/
 serviceaccount "dev-team-rbac-profile" created
 rolebinding "dev-team-tiller-binding" created
 role "dev-team" created
