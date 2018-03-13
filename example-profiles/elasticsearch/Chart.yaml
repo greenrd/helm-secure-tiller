@@ -1,0 +1,4 @@
+apiVersion: v1
+description: For running es with a secure tiller
+name: elasticsearch-secure-tiller
+version: 0.1.0
