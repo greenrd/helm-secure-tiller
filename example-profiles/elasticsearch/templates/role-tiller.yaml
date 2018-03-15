@@ -5,7 +5,7 @@ metadata:
   name: {{.Values.team}}
 rules:
 - apiGroups: ["", "extensions", "apps", "batch"]
-  resources: ["deployments", "replicasets", "pods", "configmaps", "secrets", "services", "cronjobs"]
+  resources: ["deployments", "replicasets", "pods", "configmaps", "secrets", "services", "statefulsets", "cronjobs"]
   verbs: ["get", "list", "watch", "create", "update", "patch", "delete"] # You can also use ["*"]
 - apiGroups: ["", "extensions", "apps"]
   resources: ["namespaces"]
