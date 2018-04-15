@@ -27,7 +27,7 @@ First, set up your environment:
  - You need to have [Go](https://golang.org/) installed. Make sure to set `$GOPATH`
  - If you don't have [Glide](http://glide.sh/) installed, the instructions below will install it into `$GOPATH/bin` for you.
 
-Clone this repo into your `$GOPATH` using git. You can use the command `You can use go get -d github.com/michelleN/helm-secure-tiller` for that.
+Clone this repo into your `$GOPATH` using git. You can use the command `go get -d github.com/michelleN/helm-secure-tiller` for that.
 
 ```
 $ cd $GOPATH/src/github.com/michelleN/helm-secure-tiller
